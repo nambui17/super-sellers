@@ -1,0 +1,16 @@
+.navContainer {
+    margin: 25px;
+}
+
+.navLinks {
+    border: 5px solid black;
+}
+
+.headerBox {
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.heading {
+    margin-bottom: 20px;
+}
