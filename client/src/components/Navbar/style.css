@@ -2,8 +2,22 @@
     margin: 25px;
 }
 
+.navBox {
+    border: 3px solid #3c474b;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.gridItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .navLinks {
-    border: 5px solid black;
+    padding-left: 5px;
+    display: flex;
+    align-items: center;
 }
 
 .headerBox {
