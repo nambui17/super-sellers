@@ -45,13 +45,7 @@ import {
               <HStack>
                 <Box>
                   <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
-                    <Input type="text" />
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="lastName">
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>Username</FormLabel>
                     <Input type="text" />
                   </FormControl>
                 </Box>
