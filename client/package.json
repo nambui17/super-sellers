@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.7.7",
+    "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -30,7 +31,9 @@
       "react-app/jest"
     ]
   },
-  "resolutions": { "react-devtools-core": "4.14.0" },
+  "resolutions": {
+    "react-devtools-core": "4.14.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

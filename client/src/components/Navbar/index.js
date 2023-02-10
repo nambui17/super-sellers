@@ -14,25 +14,25 @@ function Navbar() {
           <Link to="/" className="navItem">Home</Link>
         </GridItem>
         <GridItem colStart={2} colEnd={4} className="gridItem">
-        <Link to="/" className="navItem">Merchandise</Link>
+        <Link to="/merch" className="navItem">Merchandise</Link>
           </GridItem>
         <GridItem colStart={4} colEnd={6} className="gridItem">
         <Link to="/" className="navItem">Vintage Records</Link>
           </GridItem>
         <GridItem colStart={6} colEnd={8} className="gridItem">
-        <Link to="/" className="navItem">About Us</Link>
+        <Link to="/about" className="navItem">About Us</Link>
         </GridItem>
         <GridItem colStart={8} colEnd={10} className="gridItem">
-        <Link to="/" className="navItem">Contact Us</Link>
+        <Link to="/contact" className="navItem">Contact Us</Link>
         </GridItem>
         <GridItem colStart={12} colEnd={13} className="gridItem">
         <Link to="/" className="navItem">Wishlist</Link>
         </GridItem>
         <GridItem colStart={13} colEnd={14} className="gridItem">
-        <Link to="/" className="navItem">Login</Link>
+        <Link to="/login" className="navItem">Login</Link>
         </GridItem>
         <GridItem colStart={14} colEnd={15} className="gridItem">
-        <Link to="/" className="navItem">Sign Up</Link>
+        <Link to="/signup" className="navItem">Sign Up</Link>
         </GridItem>
         <GridItem className="gridItem">
         <Link to="/" className="navItem">"Image Here"</Link>

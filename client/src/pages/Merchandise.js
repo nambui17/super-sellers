@@ -1,9 +1,15 @@
 import React from 'react';
+import { Flex } from '@chakra-ui/react';
+
+import Record from '../components/Record';
 
 function Merchandise() {
 
     return (
-        <div></div>
+        <Flex>
+            <Record/>
+            <Record/>
+        </Flex>
     )
 }
 
