@@ -1,41 +1,90 @@
 import React from "react";
-import { Box, Center, Grid, GridItem, Heading } from "@chakra-ui/react";
-import { Link } from 'react-router-dom';
-import './style.css';
+import { Box, Center, Grid, GridItem, Heading, Spacer } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+import "./style.css";
 
 function Navbar() {
+  const navItems = [
+    {
+      title: "Home",
+      colStart: 1,
+      colEnd: 2,
+      link: "/",
+    },
+    {
+      title: "Merchandise",
+      colStart: 2,
+      colEnd: 4,
+      link: "/merch",
+    },
+    {
+      title: "About Us",
+      colStart: 4,
+      colEnd: 6,
+      link: "/about",
+    },
+    {
+      title: "Contact Us",
+      colStart: 6,
+      colEnd: 8,
+      link: "/contact",
+    },
+  ];
+  const loginItems = [
+    {
+      title: "Wishlist",
+      colStart: 12,
+      colEnd: 13,
+      link: "/",
+    },
+    {
+      title: "Login",
+      colStart: 13,
+      colEnd: 14,
+      link: "/login",
+    },
+    {
+      title: "Sign Up",
+      colStart: 14,
+      colEnd: 15,
+      link: "/signup",
+    },
+  ];
   return (
     <Box className="navContainer">
       <Center className="headerBox">
         <Heading className="heading">New Age Records</Heading>
       </Center>
-      <Grid templateColumns='repeat(15, 1fr)' className="navBox">
-        <GridItem colStart={1} colEnd={2} className="gridItem">
-          <Link to="/" className="navItem">Home</Link>
-        </GridItem>
-        <GridItem colStart={2} colEnd={4} className="gridItem">
-        <Link to="/merch" className="navItem">Merchandise</Link>
+      <Grid templateColumns="repeat(15, 1fr)" className="navBox">
+        {navItems.map((item) => (
+          <GridItem
+            colStart={item.colStart}
+            colEnd={item.colEnd}
+            className="gridItem"
+            key={item.title}
+          >
+            <Link to={item.link} className="navItem">
+              {item.title}
+            </Link>
           </GridItem>
-        <GridItem colStart={4} colEnd={6} className="gridItem">
-        <Link to="/" className="navItem">Vintage Records</Link>
+        ))}
+        <Spacer />
+        {loginItems.map((item) => (
+          <GridItem
+            colStart={item.colStart}
+            colEnd={item.colEnd}
+            className="gridItem"
+            key={item.title}
+          >
+            <Link to={item.link} className="navItem">
+              {item.title}
+            </Link>
           </GridItem>
-        <GridItem colStart={6} colEnd={8} className="gridItem">
-        <Link to="/about" className="navItem">About Us</Link>
-        </GridItem>
-        <GridItem colStart={8} colEnd={10} className="gridItem">
-        <Link to="/contact" className="navItem">Contact Us</Link>
-        </GridItem>
-        <GridItem colStart={12} colEnd={13} className="gridItem">
-        <Link to="/" className="navItem">Wishlist</Link>
-        </GridItem>
-        <GridItem colStart={13} colEnd={14} className="gridItem">
-        <Link to="/login" className="navItem">Login</Link>
-        </GridItem>
-        <GridItem colStart={14} colEnd={15} className="gridItem">
-        <Link to="/signup" className="navItem">Sign Up</Link>
-        </GridItem>
+        ))}
         <GridItem className="gridItem">
-        <Link to="/" className="navItem">"Image Here"</Link>
+          <Link to="/" className="navItem">
+            "Image Here"
+          </Link>
         </GridItem>
       </Grid>
     </Box>
