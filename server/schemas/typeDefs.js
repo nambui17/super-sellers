@@ -24,8 +24,24 @@ const typeDefs = gql`
     email: String
     password: String
   }
+  type Order {
+    _id: ID
+    purchaseDate: String
+    records: [Record]
+  }
+  type Cart {
+    _id: ID
+    records: [Record]
+  }
+  type Wishlist {
+    _id: ID
+    records: [Record]
+  }
   type Auth {
     token: ID
+    user: User
+  }
+  type Query {
     user: User
   }
 
@@ -36,14 +52,14 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
-    addOrder(products: [ID]!): Order
+    addOrder(records: [ID]!): Order
     updateUser(
       firstName: String
       lastName: String
       email: String
       password: String
     ): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    updateRecord(_id: ID!, quantity: Int!): Record
     login(email: String!, password: String!): Auth
   }
 `;
