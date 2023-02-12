@@ -9,12 +9,12 @@ const typeDefs = gql`
     catNo: String
     format: String
     status: String
-    price: Number
+    price: Float
     dateListed: String
     comments: String
     mediaCondition: String
     sleeveCondition: String
-    quantity: Number
+    quantity: Int
   }
 
   type User {
