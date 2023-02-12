@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 
 export default function Home() {
+
   return (
     <Box>
       <Grid gridTemplateColumns="repeat(5,1fr)" autoRows>
@@ -35,6 +36,7 @@ export default function Home() {
           <Image
             src="\assets\images\pexels-elviss-railijs-bitāns-1389429.jpg"
             alt="Dua Lipa"
+            borderRadius={'lg'}
           />
         </GridItem>
       </Grid>
