@@ -50,6 +50,8 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    
+    //create updateRecord mutation instead of addRecord
 
     addRecord: async (parent, args) => {
       const newRecord = await Record.create(args);
