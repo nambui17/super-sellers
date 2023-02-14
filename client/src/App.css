@@ -25,3 +25,17 @@ height: 100vh;
   width: 350px;
   margin:10px 45px ;
 }
+.wishlistbox{
+  display: flex;
+  flex-wrap: wrap;
+}
+.atc{
+  background-color: rgb(84, 84, 90);
+  width: 100px;
+  height: 40px;
+  color: azure;
+  margin: 0px 0px 60px;
+}
+.wluser{
+  font-size: 40px;
+}
