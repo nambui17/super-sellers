@@ -15,7 +15,6 @@ const resolvers = {
     },
     records: async (parent, args) => {
       const recordData = await Record.find();
-      console.log(recordData);
       return recordData;
     },
     record: async (parent, {_id}) => {
