@@ -20,6 +20,7 @@ import Signup from "./pages/Signup";
 import SingleRecord from './pages/SingleRecord';
 
 import "./App.css";
+import Wishlist from "./pages/Wishlist";
 
 const httpLink = createHttpLink({
   uri: "/graphql",
@@ -54,7 +55,7 @@ function App() {
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/merch/:recordId" element={<SingleRecord/>}/>
-            
+            <Route path="/wishlist" element={<Wishlist/>}/>
           </Routes>
         </Router>
       </ApolloProvider>

@@ -35,7 +35,7 @@ function Navbar() {
       title: "Wishlist",
       colStart: 12,
       colEnd: 13,
-      link: "/",
+      link: "/wishlist",
     },
     {
       title: "Login",
