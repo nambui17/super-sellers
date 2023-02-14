@@ -89,7 +89,7 @@ import {
               </Stack>
               <Stack pt={6}>
                 <Text align={'center'}>
-                  Already a user? <Link color={'blue.400'}>Login</Link>
+                  Already a user? <Link to='/login' color={'blue.400'}>Login</Link>
                 </Text>
               </Stack>
             </Stack>
