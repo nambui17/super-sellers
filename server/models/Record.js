@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-const { Schema } = mongoose;
+const {Schema, model} = require('mongoose');
 
 const recordSchema = new Schema({
   artist: {
@@ -11,17 +9,9 @@ const recordSchema = new Schema({
     type: String,
     required: true,
   },
-  label: {
+  imageUrl: {
     type: String,
-  },
-  catNo: {
-    type: String,
-  },
-  format: {
-    type: String,
-  },
-  status: {
-    type: String,
+    required: true,
   },
   price: {
     type: Number,
@@ -30,20 +20,25 @@ const recordSchema = new Schema({
   dateListed: {
     type: String,
   },
+  totalTracks: {
+    type: Number,
+  },
   comments: {
-    type: String,
-  },
-  mediaCondition: {
-    type: String,
-  },
-  sleeveCondition: {
     type: String,
   },
   quantity: {
     type: Number,
   },
+  spotifyId: {
+    type: String,
+    required: true,
+  },
+  spotifyUri: {
+    type: String,
+    required: true,
+  }
 });
 
-const Record = mongoose.model('Record', recordSchema);
+const Record = model('Record', recordSchema);
 
 module.exports = Record;
