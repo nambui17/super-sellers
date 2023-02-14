@@ -81,7 +81,8 @@ const typeDefs = gql`
     price: Float!
     status: String
     ): Record
-    
+
+    #make updateWishlist instead of addWishlist
     addWishlist(
     records: [ID]!
     ): Wishlist
