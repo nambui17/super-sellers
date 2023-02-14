@@ -5,16 +5,14 @@ const typeDefs = gql`
     _id: ID
     artist: String
     albumTitle: String
-    label: String
-    catNo: String
-    format: String
-    status: String
+    imageUrl: String
     price: Float
     dateListed: String
+    totalTracks: Int
     comments: String
-    mediaCondition: String
-    sleeveCondition: String
     quantity: Int
+    spotifyId: String
+    spotifyUri: String
   }
 
   type User {
