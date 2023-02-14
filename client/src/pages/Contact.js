@@ -2,6 +2,9 @@ import React from 'react';
 import {
     Button
 } from '@chakra-ui/react';
+import { 
+    EmailIcon
+} from '@chakra-ui/icons'
 
 const styles = {
     div:{
@@ -22,7 +25,7 @@ function Contact() {
             <h2>Click the button below to send us an email with any questions.</h2>
 
             <a style={styles.button} href="mailto: garrettohrt@gmail.com">
-                <Button colorScheme='teal' variant='solid'>
+                <Button leftIcon={<EmailIcon />}  colorScheme='teal' variant='solid'>
                     Email
                 </Button>
             </a>
