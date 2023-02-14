@@ -18,7 +18,7 @@ import './style.css';
 function Record({id, image, title, artist, status, comments, quantity, condition}) {
   // for records use the 300x300 images provided by the spotify api
   return (
-      <Card maxW="md" className="record">
+      <Card maxW="sm" className="record">
         <CardBody>
           <Link>
           <Image

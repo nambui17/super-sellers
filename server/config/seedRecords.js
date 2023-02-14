@@ -2,6 +2,7 @@ const seedData = require('./seedData.json');
 const fs = require('fs');
 const fetch = require('node-fetch');
 require('dotenv').config();
+
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_ID;
 const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_SECRET;
 
@@ -43,7 +44,7 @@ async function getAlbum(artist, title) {
     },
   });
   res = await response.json();
-  return res.albums.items;
+  return res.albums.items[0];
 }
 
 function getArtistURL(artist) {
@@ -58,18 +59,47 @@ function getTitleURL(title) {
   return url;
 }
 
+function randomPrice() {
+  let r = Math.random()*25;
+  r = Math.round(r*100)/100;
+  return r;
+}
+
+function randomComment() {
+  const comments = ['Mint', 'Good', 'Poor', 'Very Poor', 'Very Good'];
+  const random = Math.floor(Math.random()*5);
+  return comments[random];
+}
+
 async function outputJSON() {
   let objList = [];
-  for (let i=0; i<21;i++) {
-    let albumItem = await getAlbum(seedData[i].artist, seedData[i].title);
-    let newObj = {
-        ...seedData[i],
-        spotifyId: albumItem[0].id,
-        uri: albumItem[0].uri,
-        image: albumItem[0].images[1].url,
+  for (let i = 0; i < 100; i++) {
+    if (i===59) {
+      continue;
     }
+    let albumItem = await getAlbum(seedData[i].artist, seedData[i].title);
+    // Can create a new object with the new title
+    let newObj = {
+      'artist': albumItem.artists[0].name,
+      'albumTitle': albumItem.name,
+      'imageUrl': albumItem.images[1].url,
+      'price': randomPrice(),
+      'dateListed': albumItem.release_date,
+      'totalTracks': albumItem.total_tracks,
+      'spotifyId': albumItem.id,
+      'spotifyUri': albumItem.uri,
+      'comments': randomComment(),
+      'quantity': Math.floor(Math.random()*10)
+    };
     objList.push(newObj);
   }
-  console.log(objList);
+  return objList;
 }
-outputJSON();
+
+async function writeJSON() {
+  const objList = await outputJSON();
+  const data = JSON.stringify(objList);
+  fs.writeFileSync('dataSeed.json', data);
+}
+
+writeJSON();
