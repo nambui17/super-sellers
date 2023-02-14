@@ -6,7 +6,7 @@ const cartSchema = new Schema({
   records: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Records",
+      ref: "Record",
     },
   ],
 });

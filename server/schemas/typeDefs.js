@@ -43,6 +43,9 @@ const typeDefs = gql`
   }
   type Query {
     user: User
+    records(artist: String, albumTitle: String): [Record]
+    record(_id: ID!): Record
+
   }
 
   type Mutation {
@@ -52,15 +55,43 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Auth
-    addOrder(records: [ID]!): Order
+
+    addOrder(
+    records: [ID]!
+    ): Order
+    
     updateUser(
       firstName: String
       lastName: String
       email: String
       password: String
     ): User
-    updateRecord(_id: ID!, quantity: Int!): Record
-    login(email: String!, password: String!): Auth
+
+    updateRecord(
+    _id: ID!
+     quantity: Int!
+     ): Record
+
+    login(
+    email: String!
+    password: String!
+    ): Auth
+
+    addRecord(
+    artist: String!
+    albumTitle: String!
+    price: Float!
+    status: String
+    ): Record
+    
+    addWishlist(
+    records: [ID]!
+    ): Wishlist
+
+    addCart(
+    records: [ID]!
+    ): Cart
+  
   }
 `;
 
