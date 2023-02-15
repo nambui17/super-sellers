@@ -11,26 +11,27 @@ import {
     Button,
     Heading,
     Text,
-    useColorModeValue,
   } from '@chakra-ui/react';
+
   
   export default function Login() {
     return (
       <Flex
+        color='#000000'
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}>
+        bg={`#ffffff`}>
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>Sign in to your account</Heading>
             <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool <Link color={'blue.400'}>Record</Link> 
+              to enjoy all of our cool<Link color={'blue.400'}>Records</Link> 
             </Text>
           </Stack>
           <Box
             rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
+            bg={`#ffffff`}
             boxShadow={'lg'}
             p={8}>
             <Stack spacing={4}>
