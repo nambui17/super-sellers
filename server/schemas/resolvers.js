@@ -1,6 +1,7 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Record, Order } = require('../models');
 const { signToken } = require("../utils/auth");
+const stripe = require('stripe')('sk_test_51MbWZzDNwv6WJ9kGKJC98HVjapyLFNScghs3xlxDw75OLuwsboD4LqXUZiqg1Sv1MlkGL54ZkgNtKal7I0i4zDPS00kGLfbTFa');
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
@@ -34,7 +35,42 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
+    checkout: async (parent, args, context) => {
+      const url = new URL(context.headers.referer).origin;
+      const order = new Order({ records: args.records });
+      const line_items = [];
 
+      const { records } = await order.populate('records');
+
+      for (let i = 0; i < records.length; i++) {
+        const record = await stripe.record.create({
+          albumTitle: record[i].albumTitle,
+          artist: record[i].artist,
+          imageUrl: [`${url}/images/${products[i].image}`]
+        });
+
+        const price = await stripe.prices.create({
+          record: record._id,
+          unit_amount: records[i].price * 100,
+          currency: 'usd',
+        });
+
+        line_items.push({
+          price: price.id,
+          quantity: 1
+        });
+      }
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`
+      });
+
+      return { session: session.id };
+    }
   },
 
   Mutation: {
