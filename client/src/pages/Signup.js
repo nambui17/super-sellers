@@ -59,13 +59,14 @@ import {
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" />
               </FormControl>
-              <FormControl id="password" isRequired>
+              <FormControl className="password" ml="0px" id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input type={showPassword ? 'text' : 'password'} />
-                  <InputRightElement h={'full'}>
+                  <InputRightElement mt="0px"> 
                     <Button
-                      variant={'ghost'}
+                     
+                     variant={'ghost'}
                       onClick={() =>
                         setShowPassword((showPassword) => !showPassword)
                       }>
