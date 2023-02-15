@@ -61,6 +61,7 @@ function App() {
               <Route path="/wishlist" element={<Wishlist />} />
             </Routes>
           </StoreProvider>
+
         </Router>
       </ApolloProvider>
     </ChakraProvider>

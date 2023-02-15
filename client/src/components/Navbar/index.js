@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, Center, Grid, GridItem, Heading, Spacer } from "@chakra-ui/react";
+import { Box, Center, Grid, GridItem, Heading, Spacer, Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import cartpic from "./image/recordcart.png"
 import "./style.css";
 
 function Navbar() {
@@ -83,7 +84,7 @@ function Navbar() {
         ))}
         <GridItem className="gridItem">
           <Link to="/" className="navItem">
-            "Image Here"
+          <Image className='rwimage' src={cartpic} alt='Records Cart' />
           </Link>
         </GridItem>
       </Grid>
