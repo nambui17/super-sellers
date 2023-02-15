@@ -1,6 +1,6 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { User, Record, Cart, Order, Wishlist } = require('../models');
-const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require("apollo-server-express");
+const { User, Record, Order } = require('../models');
+const { signToken } = require("../utils/auth");
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
@@ -23,6 +23,18 @@ const resolvers = {
       const singleRecordData = await Record.findById(_id);
       return singleRecordData;
     },
+    order: async (parent, { _id }, context) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id).populate({
+          path: 'orders.records'
+        });
+
+        return user.orders.id(_id);
+      }
+
+      throw new AuthenticationError('Not logged in');
+    },
+
   },
 
   Mutation: {
@@ -50,26 +62,43 @@ const resolvers = {
       return { token, user };
     },
 
-    //create updateRecord mutation instead of addRecord
+    updateRecord: async (parent, { _id, quantity }) => {
+      const decrement = Math.abs(quantity) * -1;
+
+      return await Record.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+    },
 
     addRecord: async (parent, args) => {
       const newRecord = await Record.create(args);
       return newRecord;
     },
 
-    addWishlist: async (parent, { records }, context) => {
+    addWishlist: async (parent, args, context) => {
       console.log(context);
       if (context.user) {
-        const wishList = new Wishlist({ records });
-
-        await User.findByIdAndUpdate(context.user.id, {
-          $push: { wishLists: wishList },
-        });
-
-        return wishList;
+        const updateUser =  await User.findByIdAndUpdate(
+          { _id: context.user.id }, 
+          {$push: { savedWishlist: args._id } },
+          { new: true }
+        );
+        return updateUser;
       }
 
       throw new AuthenticationError('Not logged in');
+    },
+
+    removeWishlist: async (parent, args, context) => {
+      if (context.user) {
+        const updateUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedWishlist: { _id: args._id } } },
+          { new: true, runValidators: true, useFindAndModify: false }
+        );
+
+        return updateUser;
+      }
+
+      throw new AuthenticationError('You need to be logged in!');
     },
 
     addOrder: async (parent, { records }, context) => {
@@ -92,21 +121,6 @@ const resolvers = {
         return User.findByIdAndUpdate(context.user.id, args, {
           new: true,
         });
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
-
-    addCart: async (parent, { records }, context) => {
-      console.log(context);
-      if (context.user) {
-        const cart = new Cart({ records });
-
-        await User.findByIdAndUpdate(context.user.id, {
-          $push: { carts: cart },
-        });
-
-        return cart;
       }
 
       throw new AuthenticationError('Not logged in');

@@ -21,6 +21,7 @@ const typeDefs = gql`
     lastName: String
     email: String
     password: String
+    savedWishlist: [Record]
   }
   type Order {
     _id: ID
@@ -43,6 +44,9 @@ const typeDefs = gql`
     user: User
     records(artist: String, albumTitle: String): [Record]
     record(_id: ID!): Record
+    order(_id: ID!): Order
+    #checkout(records: [ID]!): Checkout
+
 
   }
 
@@ -82,15 +86,13 @@ const typeDefs = gql`
     status: String
     ): Record
 
-    #make updateWishlist instead of addWishlist
     addWishlist(
-    records: [ID]!
-    ): Wishlist
+    _id: [ID]!
+    ): User
+    removeWishlist(
+    _id: ID!
+    ): User
 
-    addCart(
-    records: [ID]!
-    ): Cart
-  
   }
 `;
 

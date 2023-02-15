@@ -58,22 +58,6 @@ mutation addOrder($records: [ID]!) {
 }
 `
 
-export const ADD_CART = gql`
-mutation addCart($records: [ID]!) {
-  addCart(records: $records) {
-    _id
-    records {
-      _id
-      albumTitle
-      artist
-      imageUrl
-      price
-      quantity
-    }
-  }
-}
-`
-
 export const ADD_WISHLIST = gql`
 mutation addWishlist($records: [ID]!) {
   addWishlist(records: $records) {
