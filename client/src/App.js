@@ -56,6 +56,7 @@ function App() {
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/merch/:recordId" element={<SingleRecord/>}/>
             <Route path="/wishlist" element={<Wishlist/>}/>
+           
           </Routes>
         </Router>
       </ApolloProvider>
