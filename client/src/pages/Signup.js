@@ -23,11 +23,12 @@ import {
   
     return (
       <Flex
+        color='#000000'
         minH={'100vh'}
         align={'center'}
         justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}>
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        bg={'white'}>
+        <Stack>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'} textAlign={'center'}>
               Sign up
@@ -41,21 +42,19 @@ import {
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
             p={8}>
-            <Stack spacing={4}>
-              <HStack>
-                <Box>
+             
                   <FormControl id="firstName" isRequired>
                     <FormLabel>First Name</FormLabel>
                     <Input type="text" />
                   </FormControl>
-                </Box>
-                <Box>
+                
+                
                   <FormControl id="lastName">
                     <FormLabel>Last Name</FormLabel>
                     <Input type="text" />
                   </FormControl>
-                </Box>
-              </HStack>
+                
+              
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" />
@@ -92,7 +91,7 @@ import {
                   Already a user? <Link to='/login' color={'blue.400'}>Login</Link>
                 </Text>
               </Stack>
-            </Stack>
+            
           </Box>
         </Stack>
       </Flex>
