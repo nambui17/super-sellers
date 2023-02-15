@@ -31,3 +31,6 @@
 .crtpic{
     height: 25px;
 }
+.rwimage {
+    max-height: 50px;
+}

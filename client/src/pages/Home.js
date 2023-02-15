@@ -8,6 +8,7 @@ import {
   Image,
   Text,
 } from '@chakra-ui/react';
+import Cart from '../components/Cart';
 
 
 export default function Home() {
@@ -40,7 +41,6 @@ export default function Home() {
           />
         </GridItem>
       </Grid>
-
     </Box>
   );
 }
