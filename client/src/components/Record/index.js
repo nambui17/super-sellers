@@ -63,4 +63,8 @@ function Record({id, image, title, artist, comments, quantity, price}) {
   );
 }
 
+
 export default Record;
+
+
+

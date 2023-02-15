@@ -6,9 +6,9 @@ import Record from '../components/Record';
 
 export default function SingleRecord() {
     const { recordId } = useParams();
-    // const { loading, data } = useQuery(QUERY_SINGLE_RECORD, {
-    //     variables: { _id: recordId },
-    // })
+    // // const { loading, data } = useQuery(QUERY_SINGLE_RECORD, {
+    // //     variables: { _id: recordId },
+    // // })
     return (
         <Box>
             {/* loading ? <Spinner/> : <Record/>< */}
