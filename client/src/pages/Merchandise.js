@@ -12,6 +12,7 @@ import {
 import { QUERY_MANY_RECORDS } from "../utils/queries";
 import FilterBar from "../components/FilterBar";
 
+
 import Record from "../components/Record";
 import '../App.css'
 
@@ -46,6 +47,7 @@ function Merchandise() {
           />))}
         </SimpleGrid>
       </GridItem>
+
     </Grid>
   );
 }

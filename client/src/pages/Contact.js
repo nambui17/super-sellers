@@ -4,7 +4,8 @@ import {
 } from '@chakra-ui/react';
 import { 
     EmailIcon
-} from '@chakra-ui/icons'
+} from '@chakra-ui/icons';
+
 
 const styles = {
     div:{

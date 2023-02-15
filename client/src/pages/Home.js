@@ -8,6 +8,8 @@ import {
   Image,
   Text,
 } from '@chakra-ui/react';
+import Cart from '../components/Cart';
+
 
 export default function Home() {
   return (

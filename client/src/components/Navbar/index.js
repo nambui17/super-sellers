@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Center, Grid, GridItem, Heading, Spacer, Image } from "@chakra-ui/react";
+import React, { useRef } from "react";
+import { Box, Center, Grid, GridItem, Heading, Spacer, Image, Modal, useDisclosure, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, ModalContent} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import cartpic from "./image/recordcart.png"
 import "./style.css";
@@ -51,6 +51,9 @@ function Navbar() {
       link: "/signup",
     },
   ];
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const finalRef = useRef(null);
+
   return (
     <Box className="navContainer">
       <Center className="headerBox">
@@ -83,9 +86,22 @@ function Navbar() {
           </GridItem>
         ))}
         <GridItem className="gridItem">
-          <Link to="/" className="navItem">
-          <Image className='rwimage' src={cartpic} alt='Records Cart' />
-          </Link>
+          <Image className='rwimage' src={cartpic} alt='Records Cart' onClick={onOpen}/>
+          <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay/>
+            <ModalContent>
+              <ModalHeader>Cart</ModalHeader>
+              <ModalBody>
+                <h1> Something </h1>
+              </ModalBody>
+              <ModalFooter>
+                <Button colorScheme='blue' mr={3} onClick={onClose}>
+                  Close
+                </Button>
+                <Button variant='ghost'>Secondary Action</Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
         </GridItem>
       </Grid>
     </Box>

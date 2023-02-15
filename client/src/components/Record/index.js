@@ -17,7 +17,6 @@ import {
 import { Link } from 'react-router-dom';
 import './style.css';
 
-
 function Record({id, image, title, artist, comments, quantity, price}) {
   // for records use the 300x300 images provided by the spotify api
   return (

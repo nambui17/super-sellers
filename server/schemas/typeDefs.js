@@ -23,31 +23,38 @@ const typeDefs = gql`
     password: String
     savedWishlist: [Record]
   }
+
   type Order {
     _id: ID
     purchaseDate: String
     records: [Record]
   }
+
   type Cart {
     _id: ID
     records: [Record]
   }
+
   type Wishlist {
     _id: ID
     records: [Record]
   }
+
   type Auth {
     token: ID
     user: User
   }
+
+  type Checkout {
+    session: ID
+  }
+
   type Query {
     user: User
     records(artist: String, albumTitle: String): [Record]
     record(_id: ID!): Record
     order(_id: ID!): Order
-    #checkout(records: [ID]!): Checkout
-
-
+    checkout(records: [ID]!): Checkout
   }
 
   type Mutation {
