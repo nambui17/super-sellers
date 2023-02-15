@@ -39,3 +39,7 @@ height: 100vh;
 .wluser{
   font-size: 40px;
 }
+
+.password{
+  padding-left: 0px !important;
+}
