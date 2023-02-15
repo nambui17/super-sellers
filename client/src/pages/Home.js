@@ -9,6 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+
 export default function Home() {
   return (
     <Box>
@@ -39,6 +40,7 @@ export default function Home() {
           />
         </GridItem>
       </Grid>
+
     </Box>
   );
 }
