@@ -1,0 +1,7 @@
+.rwimage {
+    max-height: 50px;
+}
+
+.rwimage:hover {
+    cursor: pointer;
+}
