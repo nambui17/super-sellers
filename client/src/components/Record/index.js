@@ -11,32 +11,42 @@ import {
   Heading,
   CardFooter,
   GridItem,
+  List,
+  ListItem,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import './style.css';
 
-function Record({id, image, title, artist, status, comments, quantity, condition}) {
+
+function Record({id, image, title, artist, comments, quantity, price}) {
   // for records use the 300x300 images provided by the spotify api
   return (
       <Card maxW="sm" className="record">
         <CardBody>
-          <Link>
+          <Link to={`/merch/${id}`}>
           <Image
-            src="https://i.scdn.co/image/ab67616d00001e02bd26ede1ae69327010d49946"
-            alt="Dua Lipa Future Nostalgia"
+            src={image}
+            alt={title}
             borderRadius="lg"
+            data-id={id}
           />
           </Link>
           <Stack mt="6" spacing="3">
-            <Heading size="md">Future Nostalgia</Heading>
-            <Text>
-              This sofa is perfect for modern tropical spaces, baroque inspired
-              spaces, earthy toned spaces and for people who love a chic design
-              with a sprinkle of vintage design.
-            </Text>
-            <Text color="blue.600" fontSize="2xl">
-              $25.00
-            </Text>
+            <Heading size="md" textAlign={"center"}>{title}</Heading>
+            <List>
+              <ListItem>
+                Artist: {artist}
+              </ListItem>
+              <ListItem>
+                Price: ${price}
+              </ListItem>
+              <ListItem>
+                Condition: {comments}
+              </ListItem>
+              <ListItem>
+                Quantity: {quantity}
+              </ListItem>
+            </List>
           </Stack>
         </CardBody>
         <Divider />
@@ -54,4 +64,8 @@ function Record({id, image, title, artist, status, comments, quantity, condition
   );
 }
 
+
 export default Record;
+
+
+
