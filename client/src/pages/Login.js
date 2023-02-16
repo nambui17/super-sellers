@@ -1,4 +1,9 @@
 import React from 'react';
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+// import { Link } from 'react-router-dom';
+import { LOGIN } from '../utils/mutations';
+import Auth from '../utils/auth';
 import {
     Flex,
     Box,
@@ -15,6 +20,32 @@ import {
 
   
   export default function Login() {
+    const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error }] = useMutation(LOGIN);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const mutationResponse = await login({
+        variables: { email: formState.email, password: formState.password },
+      });
+      const token = mutationResponse.data.login.token;
+      Auth.login(token);
+      console.log(token)
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+   
     return (
       <Flex
         color='#000000'
@@ -34,14 +65,15 @@ import {
             bg={`#ffffff`}
             boxShadow={'lg'}
             p={8}>
+              <form onSubmit={handleFormSubmit}>
             <Stack spacing={4}>
               <FormControl ml="0px"  id="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" onChange={handleChange}/>
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input type="password" onChange={handleChange} />
               </FormControl>
               <Stack spacing={10}>
                 <Stack
@@ -52,6 +84,7 @@ import {
                   <Link color={'blue.400'}>Forgot password?</Link>
                 </Stack>
                 <Button
+                //  type= "submit"
                   bg={'blue.400'}
                   color={'white'}
                   _hover={{
@@ -61,6 +94,7 @@ import {
                 </Button>
               </Stack>
             </Stack>
+            </form>
           </Box>
         </Stack>
       </Flex>
