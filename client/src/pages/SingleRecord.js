@@ -2,80 +2,91 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import Cart from '../components/Cart';
 import { useStoreContext } from '../utils/GlobalState';
 import {
-    REMOVE_FROM_CART,
-    UPDATE_CART_QUANTITY,
-    ADD_TO_CART,
-    UPDATE_RECORDS
+  REMOVE_FROM_CART,
+  UPDATE_CART_QUANTITY,
+  ADD_TO_CART,
+  UPDATE_RECORDS,
 } from '../utils/actions';
-import { QUERY_MANY_RECORDS } from '../utils/queries';
+import { QUERY_SINGLE_RECORD } from '../utils/queries';
 import { idbPromise } from '../utils/helpers';
-import { Spinner, Box } from '@chakra-ui/react';
+import {
+  Spinner,
+  Box,
+  useToast,
+  Image,
+  Heading,
+  CardBody,
+} from '@chakra-ui/react';
+import Record from '../components/Record';
 
 export default function SingleRecord() {
-    const [state, dispatch] = useStoreContext();
-    const { id } = useParams();
-    const [currentRecord, setCurrentRecord] = useState({});
-    const { loading, data } = useQuery(QUERY_MANY_RECORDS);
+  const [state, dispatch] = useStoreContext();
+  const { recordId } = useParams();
+  const { loading, data } = useQuery(QUERY_SINGLE_RECORD, {
+    variables: { id: recordId },
+  });
+  const { cart } = state;
+  const toast = useToast();
 
-    const { records, cart } = state;
+  const record = data?.record || {};
 
-    useEffect(() => {
-        if (records.length) {
-            setCurrentRecord(records.find((record) => record._id === id));
-        } else if (data) {
-            dispatch({
-                type: UPDATE_RECORDS,
-                records: data.records
-            });
-            data.records.forEach((record) => {
-                idbPromise('records', 'put', record);
-            })
-        } else if (!loading) {
-            idbPromise('records', 'get').then((indexedRecords) => {
-                dispatch({
-                    type: UPDATE_RECORDS,
-                    records: indexedRecords,
-                });
-            });
-        }
-    }, [records, data, loading, dispatch, id]);
-
-    const addToCart = () => {
-        const itemInCart = cart.find((cartItem) => cartItem._id === id);
-        if (itemInCart) {
-            dispatch({
-                type: UPDATE_CART_QUANTITY,
-                _id: id,
-                purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-            });
-            idbPromise('cart','put', {
-                ...itemInCart,
-                purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-            });
-        } else {
-            dispatch({
-                type: ADD_TO_CART,
-                record: {...currentRecord, purchaseQuantity: 1},
-            });
-            idbPromise('cart', 'put', {...currentRecord, purchaseQuantity: 1});
-        }
+  const addToCart = () => {
+    const itemInCart = cart.find((cartItem) => cartItem._id === recordId);
+    if (itemInCart) {
+      dispatch({
+        type: UPDATE_CART_QUANTITY,
+        _id: recordId,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      });
+      idbPromise('cart', 'put', {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
+      });
+      toast({
+        title: 'Record Quantity Updated',
+        description: 'Record Quantity Increased in Cart',
+        status: 'success',
+        variant: 'subtle',
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      dispatch({
+        type: ADD_TO_CART,
+        record: { ...record, purchaseQuantity: 1 },
+      });
+      idbPromise('cart', 'put', { ...record, purchaseQuantity: 1 });
+      toast({
+        title: 'Record Added',
+        description: 'Record Added to Cart!',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
     }
-    const removeFromCart = () => {
-        dispatch({
-            type: REMOVE_FROM_CART,
-            _id: currentRecord._id,
-        });
-        idbPromise('cart', 'delete', {...currentRecord});
-    }
+  };
+  const removeFromCart = () => {
+    dispatch({
+      type: REMOVE_FROM_CART,
+      _id: record._id,
+    });
+    idbPromise('cart', 'delete', { ...record });
+  };
 
-    return (
-        <>
-            <Box>
-                <Link to='/merch'>Back to Records</Link>
-            </Box>
-        </>
-    )
+  return (
+    <Box>
+      <Record
+        key={record._id}
+        id={record._id}
+        image={record.imageUrl}
+        title={record.albumTitle}
+        artist={record.artist}
+        comments={record.comments}
+        quantity={record.quantity}
+        price={`${record.price}`}
+      />
+    </Box>
+  );
 }

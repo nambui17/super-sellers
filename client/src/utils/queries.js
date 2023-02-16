@@ -1,15 +1,18 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_MANY_RECORDS = gql`
-  query records {
-    records {
+  query Records($offset: Int, $albumTitle: String, $artist: String) {
+    records(offset: $offset, albumTitle: $albumTitle, artist: $artist) {
+      _id
       albumTitle
       artist
       comments
-      _id
-      imageUrl
+      dateListed
       price
+      imageUrl
       quantity
+      spotifyId
+      spotifyUri
       totalTracks
     }
   }

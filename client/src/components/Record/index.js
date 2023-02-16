@@ -13,12 +13,66 @@ import {
   GridItem,
   List,
   ListItem,
+  useToast
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
+import { ADD_TO_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
+import { idbPromise } from '../../utils/helpers';
+import { useStoreContext } from '../../utils/GlobalState';
+
 import './style.css';
 
 function Record({id, image, title, artist, comments, quantity, price}) {
-  // for records use the 300x300 images provided by the spotify api
+  const [state, dispatch] = useStoreContext();
+  const record = {
+    _id: id,
+    image,
+    title,
+    artist,
+    comments,
+    quantity,
+    price
+  }
+  const { cart } = state;
+  const toast = useToast();
+  const addToCart = () => {
+    const itemInCart = cart.find((cartItem) => cartItem._id === id)
+    if (itemInCart) {
+      dispatch({
+        type: UPDATE_CART_QUANTITY,
+        _id: id,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+      });
+      idbPromise('cart', 'put', {
+        ...itemInCart,
+        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+      });
+      toast({
+        title: 'Record Quantity Updated',
+        description: 'Record Quantity Increased in Cart',
+        status: 'success',
+        variant: 'subtle',
+        duration: 9000,
+        isClosable: true,
+      })
+    } else {
+      dispatch({
+        type: ADD_TO_CART,
+        record: {
+          ...record,
+          purchaseQuantity: 1
+        }
+      });
+      idbPromise('cart', 'put', {...record, purchaseQuantity: 1});
+      toast({
+        title: 'Record Added',
+        description: 'Record Added to Cart!',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      })
+    }
+  }
   return (
       <Card maxW="sm" className="record">
         <CardBody>
@@ -54,7 +108,7 @@ function Record({id, image, title, artist, comments, quantity, price}) {
             <Button variant="solid" colorScheme="blue">
               Buy now
             </Button>
-            <Button variant="ghost" colorScheme="blue">
+            <Button variant="ghost" colorScheme="blue" onClick={addToCart}>
               Add to cart
             </Button>
           </ButtonGroup>
