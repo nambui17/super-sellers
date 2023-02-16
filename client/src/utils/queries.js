@@ -1,8 +1,18 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_MANY_RECORDS = gql`
-  query Records($offset: Int, $albumTitle: String, $artist: String) {
-    records(offset: $offset, albumTitle: $albumTitle, artist: $artist) {
+  query Records(
+    $offset: Int
+    $albumTitle: String
+    $artist: String
+    $limit: Int
+  ) {
+    records(
+      offset: $offset
+      albumTitle: $albumTitle
+      artist: $artist
+      limit: $limit
+    ) {
       _id
       albumTitle
       artist
