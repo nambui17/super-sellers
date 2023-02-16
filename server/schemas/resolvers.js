@@ -9,15 +9,14 @@ const resolvers = {
         const userData = await User.findOne({ _id: context.user._id }).select(
           '-__v -password'
         );
-        console.log(userData);
         return userData;
       }
 
       throw new AuthenticationError('Not logged in');
     },
-    records: async (parent, args) => {
-      const recordData = await Record.find();
-      console.log(recordData);
+    records: async (parent, {artist, albumTitle, offset}) => {
+      const recordData = await Record.find().skip(offset);
+      // Record.find().skip(offset).limit(12).where('artist').equals(artist).where('albumTitle').equals(albumTitle);
       return recordData;
     },
     record: async (parent, { _id }) => {

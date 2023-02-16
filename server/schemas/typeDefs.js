@@ -51,7 +51,7 @@ const typeDefs = gql`
 
   type Query {
     user: User
-    records(artist: String, albumTitle: String): [Record]
+    records(artist: String, albumTitle: String, offset: Int): [Record]
     record(_id: ID!): Record
     order(_id: ID!): Order
     checkout(records: [ID]!): Checkout
