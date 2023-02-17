@@ -43,10 +43,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const CLIENT_ID = '';
+const REDIRECT_URI = '';
+const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
+const RESPONSE_TYPE = 'token';
+
 function App() {
   return (
-      <ApolloProvider client={client}>
-            <ChakraProvider>
+    <ApolloProvider client={client}>
+      <ChakraProvider>
         <Router>
           <StoreProvider>
             <Navbar />
@@ -61,10 +66,9 @@ function App() {
               <Route path="/wishlist" element={<Wishlist />} />
             </Routes>
           </StoreProvider>
-
         </Router>
-        </ChakraProvider>
-      </ApolloProvider>
+      </ChakraProvider>
+    </ApolloProvider>
   );
 }
 

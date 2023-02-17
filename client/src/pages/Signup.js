@@ -13,18 +13,17 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_USER } from '../utils/mutations';
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [formState, setFormState] = useState({ email: '', password: '', firstName: '', lastName: '' });
   const [addUser] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
@@ -38,7 +37,6 @@ export default function SignupCard() {
       },
     });
     const token = mutationResponse.data.addUser.token;
-    console.log(token);
     Auth.login(token);
   };
 
@@ -76,17 +74,17 @@ export default function SignupCard() {
           <form onSubmit={handleFormSubmit}>
             <FormControl id="firstName" isRequired>
               <FormLabel>First Name</FormLabel>
-              <Input type="text" onChange={handleChange} />
+              <Input type="text" onChange={handleChange} name="firstName"/>
             </FormControl>
 
             <FormControl id="lastName">
               <FormLabel>Last Name</FormLabel>
-              <Input type="text" onChange={handleChange} />
+              <Input type="text" onChange={handleChange} name='lastName' />
             </FormControl>
 
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" onChange={handleChange} />
+              <Input type="email" onChange={handleChange} name='email'/>
             </FormControl>
             <FormControl className="password" ml="0px" id="password" isRequired>
               <FormLabel>Password</FormLabel>
@@ -94,6 +92,7 @@ export default function SignupCard() {
                 <Input
                   type={showPassword ? 'text' : 'password'}
                   onChange={handleChange}
+                  name='password'
                 />
                 <InputRightElement mt="0px">
                   <Button
@@ -109,7 +108,7 @@ export default function SignupCard() {
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button
-                //  type="submit"
+                onClick={handleFormSubmit}
                 loadingText="Submitting"
                 size="lg"
                 bg={'blue.400'}
@@ -117,6 +116,7 @@ export default function SignupCard() {
                 _hover={{
                   bg: 'blue.500',
                 }}
+                type='submit'
               >
                 Sign up
               </Button>
