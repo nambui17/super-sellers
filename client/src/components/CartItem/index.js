@@ -1,7 +1,7 @@
 import React from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
-import { Box, Image } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Image, SimpleGrid } from '@chakra-ui/react';
 import { idbPromise } from '../../utils/helpers';
 
 export default function CartItem({record}) {
@@ -32,8 +32,9 @@ export default function CartItem({record}) {
         }
     }
     return (
-        <Box>
-            <Image src={record.image} alt={record.albumTitle}/>
-        </Box>
+        <SimpleGrid>
+            <Box><p>{record.title}</p></Box>
+            <Box><p>{record.price}</p></Box>
+        </SimpleGrid>
     )
 }

@@ -8,7 +8,7 @@ import {
   Image,
   Text,
 } from '@chakra-ui/react';
-import Cart from '../components/Cart';
+import { useSpring, animated } from '@react-spring/web';
 
 
 export default function Home() {

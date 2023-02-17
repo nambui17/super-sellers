@@ -105,10 +105,7 @@ function Record({id, image, title, artist, comments, quantity, price}) {
         <Divider />
         <CardFooter>
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue">
-              Buy now
-            </Button>
-            <Button variant="ghost" colorScheme="blue" onClick={addToCart}>
+            <Button variant="solid" colorScheme="green" onClick={addToCart}>
               Add to cart
             </Button>
           </ButtonGroup>

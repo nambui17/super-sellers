@@ -19,10 +19,11 @@ import {
   Heading,
   CardBody,
   Button,
+  Center,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react';
 import Record from '../components/Record';
-import SpotifyPlayer from 'react-spotify-player';
-
 
 export default function SingleRecord({ token }) {
   const [state, dispatch] = useStoreContext();
@@ -79,24 +80,45 @@ export default function SingleRecord({ token }) {
   };
 
   return (
-    <Box>
-      <Record
-        key={record._id}
-        id={record._id}
-        image={record.imageUrl}
-        title={record.albumTitle}
-        artist={record.artist}
-        comments={record.comments}
-        quantity={record.quantity}
-        price={`${record.price}`}
-      />
-      {loading ? <Spinner/> : 
-      <SpotifyPlayer 
-        uri={record.spotifyUri}
-        size='large'
-        them='black'
-        view='list'
-      />}
-    </Box>
+    <Grid templateColumns="repeat(5,1fr)">
+      {loading ? (
+        <Spinner />
+      ) : (
+        <GridItem
+          colStart={2}
+          colEnd={4}
+          colSpan={2}
+          rowSpan={1}
+          flex
+          justifyContent={'center'}
+        >
+          <Record
+            key={record._id}
+            id={record._id}
+            image={record.imageUrl}
+            title={record.albumTitle}
+            artist={record.artist}
+            comments={record.comments}
+            quantity={record.quantity}
+            price={`${record.price}`}
+          />
+        </GridItem>
+      )}
+      {loading ? (
+        <GridItem>
+          <Spinner />
+        </GridItem>
+      ) : (
+        <GridItem colStart={4}>
+          <iframe
+            title="Spotify"
+            className="SpotifyPlayer"
+            src={`https://embed.spotify.com/?uri=${record.spotifyUri}&view=list&theme=black`}
+            width="800"
+            height="800"
+          />
+        </GridItem>
+      )}
+    </Grid>
   );
 }

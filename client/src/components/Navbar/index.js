@@ -33,12 +33,6 @@ function Navbar() {
   ];
   const loginItems = [
     {
-      title: "Spotify",
-      colStart: 11,
-      colEnd: 12,
-      link: "http://localhost:3001/auth/login",
-    },
-    {
       title: "Wishlist",
       colStart: 12,
       colEnd: 13,
