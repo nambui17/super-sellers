@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {
   ApolloClient,
@@ -43,11 +43,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const CLIENT_ID = '';
-const REDIRECT_URI = '';
-const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
-const RESPONSE_TYPE = 'token';
-
 function App() {
   return (
     <ApolloProvider client={client}>
@@ -62,7 +57,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/merch/:recordId" element={<SingleRecord />} />
+              <Route path="/merch/:recordId" element={<SingleRecord/>} />
               <Route path="/wishlist" element={<Wishlist />} />
             </Routes>
           

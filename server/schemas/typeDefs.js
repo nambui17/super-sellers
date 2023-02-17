@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
   type Record {
@@ -51,7 +51,12 @@ const typeDefs = gql`
 
   type Query {
     user: User
-    records(artist: String, albumTitle: String, offset: Int, limit: Int): [Record]
+    records(
+      artist: String
+      albumTitle: String
+      offset: Int
+      limit: Int
+    ): [Record]
     record(_id: ID!): Record
     order(_id: ID!): Order
     checkout(records: [ID]!): Checkout
@@ -65,10 +70,8 @@ const typeDefs = gql`
       password: String!
     ): Auth
 
-    addOrder(
-    records: [ID]!
-    ): Order
-    
+    addOrder(records: [ID]!): Order
+
     updateUser(
       firstName: String
       lastName: String
@@ -76,30 +79,19 @@ const typeDefs = gql`
       password: String
     ): User
 
-    updateRecord(
-    _id: ID!
-     quantity: Int!
-     ): Record
+    updateRecord(_id: ID!, quantity: Int!): Record
 
-    login(
-    email: String!
-    password: String!
-    ): Auth
+    login(email: String!, password: String!): Auth
 
     addRecord(
-    artist: String!
-    albumTitle: String!
-    price: Float!
-    status: String
+      artist: String!
+      albumTitle: String!
+      price: Float!
+      status: String
     ): Record
 
-    addWishlist(
-    _id: [ID]!
-    ): User
-    removeWishlist(
-    _id: ID!
-    ): User
-
+    addWishlist(_id: [ID]!): User
+    removeWishlist(_id: ID!): User
   }
 `;
 

@@ -1,7 +1,19 @@
 const { AuthenticationError } = require("apollo-server-express");
 const { User, Record, Order } = require('../models');
 const { signToken } = require("../utils/auth");
+require('dotenv').config();
 const stripe = require('stripe')('sk_test_51MbWZzDNwv6WJ9kGKJC98HVjapyLFNScghs3xlxDw75OLuwsboD4LqXUZiqg1Sv1MlkGL54ZkgNtKal7I0i4zDPS00kGLfbTFa');
+
+var generateRandomString = function (length) {
+  var text = '';
+  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (var i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+};
+
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
