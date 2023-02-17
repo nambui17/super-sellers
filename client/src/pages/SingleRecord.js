@@ -18,10 +18,13 @@ import {
   Image,
   Heading,
   CardBody,
+  Button,
 } from '@chakra-ui/react';
 import Record from '../components/Record';
+import SpotifyPlayer from 'react-spotify-player';
 
-export default function SingleRecord() {
+
+export default function SingleRecord({ token }) {
   const [state, dispatch] = useStoreContext();
   const { recordId } = useParams();
   const { loading, data } = useQuery(QUERY_SINGLE_RECORD, {
@@ -87,6 +90,13 @@ export default function SingleRecord() {
         quantity={record.quantity}
         price={`${record.price}`}
       />
+      {loading ? <Spinner/> : 
+      <SpotifyPlayer 
+        uri={record.spotifyUri}
+        size='large'
+        them='black'
+        view='list'
+      />}
     </Box>
   );
 }
