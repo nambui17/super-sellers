@@ -21,7 +21,7 @@ import {
   Heading,
   Box,
 } from '@chakra-ui/react';
-import cartpic from './image/recordcart.png';
+import cartpic from './image/cart.png';
 
 import CartItem from '../CartItem';
 import './style.css';
