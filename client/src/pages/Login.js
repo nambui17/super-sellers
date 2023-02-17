@@ -69,11 +69,11 @@ import {
             <Stack spacing={4}>
               <FormControl ml="0px"  id="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" onChange={handleChange}/>
+                <Input type="email" onChange={handleChange} name="email"/>
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" onChange={handleChange} />
+                <Input type="password" onChange={handleChange} name="password" />
               </FormControl>
               <Stack spacing={10}>
                 <Stack

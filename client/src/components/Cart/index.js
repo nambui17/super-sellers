@@ -44,16 +44,16 @@ const Cart = () => {
   }, [data]);
 
   // populate the cart with records
-  useEffect(() => {
-    async function getCart() {
-      const cart = await idbPromise('cart', 'get');
-      dispatch({ type: ADD_MULTIPLE_TO_CART, records: [...cart] });
-    }
+  // useEffect(() => {
+  //   async function getCart() {
+  //     const cart = await idbPromise('cart', 'get');
+  //     dispatch({ type: ADD_MULTIPLE_TO_CART, records: [...cart] });
+  //   }
 
-    if (!state.cart.length) {
-      getCart();
-    }
-  }, [state.cart.length, dispatch]);
+  //   if (!state.cart.length) {
+  //     getCart();
+  //   }
+  // }, [state.cart.length, dispatch]);
 
   function calculateTotal() {
     let sum = 0;
@@ -64,17 +64,18 @@ const Cart = () => {
   }
 
   function submitCheckout() {
-    const productIds = [];
+    const recordIds = [];
 
     state.cart.forEach((record) => {
       for (let i = 0; i < record.purchaseQuantity; i++) {
-        productIds.push(record._id);
+        recordIds.push(record._id);
       }
     });
 
     getCheckout({
-      variables: { products: productIds },
+      variables: { records: recordIds },
     });
+    console.log(recordIds)
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -107,7 +108,7 @@ const Cart = () => {
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button variant="ghost">Checkout</Button>
+            <Button variant="ghost" onClick={submitCheckout}>Checkout</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

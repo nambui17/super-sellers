@@ -26,8 +26,8 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    records: async (parent, {artist, albumTitle, offset, limit}) => {
-      const recordData = await Record.find().skip(offset).limit(limit);
+    records: async (parent, {artist, albumTitle, offset}) => {
+      const recordData = await Record.find().skip(offset);
       // Record.find().skip(offset).limit(12).where('artist').equals(artist).where('albumTitle').equals(albumTitle);
       return recordData;
     },
@@ -48,20 +48,25 @@ const resolvers = {
     },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
+      console.log("line 39 url referer header", url);
       const order = new Order({ records: args.records });
       const line_items = [];
-
       const { records } = await order.populate('records');
 
+
+
       for (let i = 0; i < records.length; i++) {
-        const record = await stripe.record.create({
-          albumTitle: record[i].albumTitle,
-          artist: record[i].artist,
-          imageUrl: [`${url}/images/${products[i].image}`]
+
+
+        const record = await stripe.products.create({
+          name: records[i].albumTitle,
+          description: records[i].artist,
+          images: [`${url}/images/${records[i].imageUrl}`]
         });
 
+
         const price = await stripe.prices.create({
-          record: record._id,
+          product: record.id,
           unit_amount: records[i].price * 100,
           currency: 'usd',
         });
@@ -71,7 +76,6 @@ const resolvers = {
           quantity: 1
         });
       }
-
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items,
@@ -176,3 +180,4 @@ const resolvers = {
 };
 
 module.exports = resolvers;
+

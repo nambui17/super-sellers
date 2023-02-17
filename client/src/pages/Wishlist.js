@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Box } from '@chakra-ui/react';
 
-import '../App.css';
+import "../App.css";
 
 function Wishlist() {
   return (
@@ -11,7 +11,7 @@ function Wishlist() {
         <Box boxSize="300">
           <Image
             className="rwimage"
-            src="\assets\images\pexels-elviss-railijs-bitāns-1389429.jpg"
+            src="/assets/images/pexels-record.jpg"
             alt="Records Cart"
           />
           <div className="rwtitle">Record Title</div>

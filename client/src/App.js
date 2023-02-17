@@ -12,7 +12,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { StoreProvider } from './utils/GlobalState';
 
 import Navbar from './components/Navbar';
-
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Merchandise from './pages/Merchandise';
 import About from './pages/About';
@@ -60,10 +60,14 @@ function App() {
               <Route path="/merch/:recordId" element={<SingleRecord/>} />
               <Route path="/wishlist" element={<Wishlist />} />
             </Routes>
+          
           </StoreProvider>
         </Router>
+       
       </ChakraProvider>
+      <Footer/>
     </ApolloProvider>
+      
   );
 }
 
