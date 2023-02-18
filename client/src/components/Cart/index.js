@@ -26,7 +26,11 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogBody,
-  AlertDialogFooter
+  AlertDialogFooter,
+  Thead,
+  Th,
+  Tr,
+  Tbody,
 } from '@chakra-ui/react';
 import cartpic from './image/cart.png';
 
@@ -94,7 +98,11 @@ function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = useRef(null);
   const cancelRef = useRef();
-  const { isOpen: alertIsOpen, onOpen: alertOnOpen, onClose: alertOnClose  } = useDisclosure();
+  const {
+    isOpen: alertIsOpen,
+    onOpen: alertOnOpen,
+    onClose: alertOnClose,
+  } = useDisclosure();
 
   return (
     <GridItem className="gridrecord">
@@ -112,17 +120,32 @@ function Cart() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Cart</ModalHeader>
+          <ModalHeader fontSize='4xl'>Cart</ModalHeader>
           <ModalBody>
             <Table>
-              <TableCaption>Sub-total: {calculateTotal()}</TableCaption>
-            {state.cart.length ? (
-              state.cart.map((record) => (
-                <CartItem key={record._id} record={record} />
-              ))
-            ) : (
-              <Heading>No records in your cart</Heading>
-            )}
+              {state.cart.length ? (
+                <>
+                  <TableCaption placement='bottom'>Sub-total: ${calculateTotal()}</TableCaption>
+                  <Thead>
+                    <Tr>
+                      <Th>Record</Th>
+                      <Th>Price</Th>
+                      <Th isNumeric>Quantity:</Th>
+                    </Tr>
+                  </Thead>
+                </>
+              ) : (
+                <></>
+              )}
+              <Tbody>
+                {state.cart.length ? (
+                  state.cart.map((record) => (
+                    <CartItem key={record._id} record={record} />
+                  ))
+                ) : (
+                  <Heading>No records in your cart</Heading>
+                )}
+              </Tbody>
             </Table>
           </ModalBody>
           <ModalFooter>
@@ -144,35 +167,39 @@ function Cart() {
           </ModalFooter>
         </ModalContent>
         <AlertDialog
-        isOpen={alertIsOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={alertOnClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              Clear Cart?
-            </AlertDialogHeader>
+          isOpen={alertIsOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={alertOnClose}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Clear Cart?
+              </AlertDialogHeader>
 
-            <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
-            </AlertDialogBody>
+              <AlertDialogBody>
+                Are you sure? You can't undo this action afterwards.
+              </AlertDialogBody>
 
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={alertOnClose}>
-                Cancel
-              </Button>
-              <Button colorScheme='red' onClick={() => {
-                clearCart();
-                alertOnClose();
-                onClose();
-                }} ml={3}>
-                Delete
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={alertOnClose}>
+                  Cancel
+                </Button>
+                <Button
+                  colorScheme="red"
+                  onClick={() => {
+                    clearCart();
+                    alertOnClose();
+                    onClose();
+                  }}
+                  ml={3}
+                >
+                  Delete
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       </Modal>
     </GridItem>
   );
