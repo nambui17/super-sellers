@@ -5,7 +5,6 @@ import {
     REMOVE_FROM_CART,
     CLEAR_CART,
     UPDATE_CART_QUANTITY,
-    TOGGLE_CART,
     ADD_MULTIPLE_TO_CART
 } from './actions';
 
@@ -20,7 +19,6 @@ export const reducer = (state,action) => {
         case ADD_TO_CART:
             return {
                 ...state,
-                cartOpen: true,
                 cart: [...state.cart, action.record]
             };
 
@@ -33,7 +31,6 @@ export const reducer = (state,action) => {
         case UPDATE_CART_QUANTITY:
             return {
                 ...state,
-                cartOpen: true,
                 cart: state.cart.map(record => {
                     if (action._id === record._id) {
                         record.purchaseQuantity = action.purchaseQuantity
@@ -48,21 +45,14 @@ export const reducer = (state,action) => {
             });
             return {
                 ...state,
-                cartOpen: newState.length > 0,
                 cart: newState
             };
 
         case CLEAR_CART:
+            console.log(state.cart);
             return {
                 ...state,
-                cartOpen: false,
                 cart: []
-            };
-
-        case TOGGLE_CART:
-            return {
-                ...state,
-                cartOpen: !state.cartOpen
             };
 
         default:

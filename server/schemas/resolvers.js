@@ -26,8 +26,8 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    records: async (parent, {artist, albumTitle, offset}) => {
-      const recordData = await Record.find().skip(offset);
+    records: async (parent, {artist, albumTitle, offset, limit}) => {
+      const recordData = await Record.find().skip(offset).limit(limit);
       // Record.find().skip(offset).limit(12).where('artist').equals(artist).where('albumTitle').equals(albumTitle);
       return recordData;
     },

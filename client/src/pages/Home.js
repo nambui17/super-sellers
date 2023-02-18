@@ -8,16 +8,27 @@ import {
   Image,
   Text,
 } from '@chakra-ui/react';
-import Cart from '../components/Cart';
-
+import { useSpring, animated } from '@react-spring/web';
+import '../App.css';
 
 export default function Home() {
+  const AnimatedImage = animated(Image);
+  const prop = useSpring({
+    from: {x:300, opacity:0},
+    to: {x:0, opacity: 1},
+    config: {
+      mass: 5,
+      tension: 120
+    }
+  })
   return (
     <Box>
       <Grid gridTemplateColumns="repeat(5,1fr)" autoRows>
         <GridItem colSpan={2}>
           <Container>
-            <Heading>Bring the Music to Life with Every Spin!</Heading>
+            <Heading className="slogan">
+              Bring the Music to Life with Every Spin!
+            </Heading>
             <Text>
               Welcome to New Age Records, your destination for the finest
               collection of records and vinyls. At New Age Records, we believe
@@ -34,10 +45,11 @@ export default function Home() {
           </Container>
         </GridItem>
         <GridItem colSpan={2}>
-          <Image
+          <AnimatedImage
             src="/assets/images/pexels-record.jpg"
             alt="Spinning record"
             borderRadius={'lg'}
+            style={prop}
           />
         </GridItem>
       </Grid>

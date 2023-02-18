@@ -52,7 +52,7 @@ function Record({id, image, title, artist, comments, quantity, price}) {
         description: 'Record Quantity Increased in Cart',
         status: 'success',
         variant: 'subtle',
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       })
     } else {
@@ -68,7 +68,7 @@ function Record({id, image, title, artist, comments, quantity, price}) {
         title: 'Record Added',
         description: 'Record Added to Cart!',
         status: 'success',
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       })
     }
@@ -105,10 +105,7 @@ function Record({id, image, title, artist, comments, quantity, price}) {
         <Divider />
         <CardFooter>
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue">
-              Buy now
-            </Button>
-            <Button variant="ghost" colorScheme="blue" onClick={addToCart}>
+            <Button variant="solid" colorScheme="green" onClick={addToCart}>
               Add to cart
             </Button>
           </ButtonGroup>

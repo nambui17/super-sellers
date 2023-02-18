@@ -8,7 +8,6 @@ const StoreProvider = ({ value = [], ...props }) => {
     const [state, dispatch] = useRecordReducer({
         records: [],
         cart: [],
-        cartOpen: false,
     });
 
     return <Provider value={[state, dispatch]} {...props} />

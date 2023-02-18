@@ -1,6 +1,6 @@
 import React from 'react';
-import { Image, Box } from '@chakra-ui/react';
-import spotify from './image/1298766_spotify_music_sound_icon.png'
+import { Image, Box, Grid, GridItem } from '@chakra-ui/react';
+import spotifyLogo from './image/Spotify_Logo_CMYK_Green.png';
 import "./footer.css";
 
 export default function Footer() {
@@ -10,7 +10,7 @@ export default function Footer() {
         <Box boxSize="50px">
           <Image
             className="spotify"
-            src={spotify}
+            src={spotifyLogo}
             alt="Spotify Logo"
           />
         </Box>

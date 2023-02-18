@@ -5,12 +5,11 @@ import { QUERY_CHECKOUT } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import Auth from '../../utils/auth';
 import { useStoreContext } from '../../utils/GlobalState';
-import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
+import { ADD_MULTIPLE_TO_CART, CLEAR_CART } from '../../utils/actions';
 import {
   GridItem,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalFooter,
   ModalOverlay,
   ModalContent,
@@ -19,7 +18,15 @@ import {
   useDisclosure,
   Image,
   Heading,
-  Box,
+  Table,
+  ButtonGroup,
+  TableCaption,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter
 } from '@chakra-ui/react';
 import cartpic from './image/cart.png';
 
@@ -31,7 +38,7 @@ const stripePromise = loadStripe(
   'pk_test_51MbWZzDNwv6WJ9kG24eIHIfg9hlFTUJbGd280dX0b4s5o32BGrgybaD80xmb3eu48yWToGHRg7CFT3vyER7f7XYc00x0hNzg5b'
 );
 
-const Cart = () => {
+function Cart() {
   const [state, dispatch] = useStoreContext();
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
@@ -44,16 +51,16 @@ const Cart = () => {
   }, [data]);
 
   // populate the cart with records
-  // useEffect(() => {
-  //   async function getCart() {
-  //     const cart = await idbPromise('cart', 'get');
-  //     dispatch({ type: ADD_MULTIPLE_TO_CART, records: [...cart] });
-  //   }
+  useEffect(() => {
+    async function getCart() {
+      const cart = await idbPromise('cart', 'get');
+      dispatch({ type: ADD_MULTIPLE_TO_CART, records: [...cart] });
+    }
 
-  //   if (!state.cart.length) {
-  //     getCart();
-  //   }
-  // }, [state.cart.length, dispatch]);
+    if (!state.cart.length) {
+      getCart();
+    }
+  }, [state.cart.length, dispatch]);
 
   function calculateTotal() {
     let sum = 0;
@@ -75,11 +82,19 @@ const Cart = () => {
     getCheckout({
       variables: { records: recordIds },
     });
-    console.log(recordIds)
+  }
+
+  function clearCart() {
+    state.cart.forEach((r) => {
+      idbPromise('cart', 'delete', { ...r });
+    });
+    dispatch({ type: CLEAR_CART });
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = useRef(null);
+  const cancelRef = useRef();
+  const { isOpen: alertIsOpen, onOpen: alertOnOpen, onClose: alertOnClose  } = useDisclosure();
 
   return (
     <GridItem className="gridrecord">
@@ -89,31 +104,78 @@ const Cart = () => {
         alt="Records Cart"
         onClick={onOpen}
       />
-      <Modal finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+      <Modal
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+        size={'4xl'}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Cart</ModalHeader>
           <ModalBody>
+            <Table>
+              <TableCaption>Sub-total: {calculateTotal()}</TableCaption>
             {state.cart.length ? (
-              <Box>
-                {state.cart.map((record) => (
-                  <CartItem key={record._id} record={record} />
-                ))}
-              </Box>
+              state.cart.map((record) => (
+                <CartItem key={record._id} record={record} />
+              ))
             ) : (
-              <Heading>Log in to check out</Heading>
+              <Heading>No records in your cart</Heading>
             )}
+            </Table>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost" onClick={submitCheckout}>Checkout</Button>
+            <ButtonGroup>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button
+                variant="solid"
+                colorScheme={'green'}
+                onClick={submitCheckout}
+              >
+                Checkout
+              </Button>
+              <Button variant="solid" colorScheme={'red'} onClick={alertOnOpen}>
+                Clear Cart
+              </Button>
+            </ButtonGroup>
           </ModalFooter>
         </ModalContent>
+        <AlertDialog
+        isOpen={alertIsOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={alertOnClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Clear Cart?
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You can't undo this action afterwards.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={alertOnClose}>
+                Cancel
+              </Button>
+              <Button colorScheme='red' onClick={() => {
+                clearCart();
+                alertOnClose();
+                onClose();
+                }} ml={3}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
       </Modal>
     </GridItem>
   );
-};
+}
 
 export default Cart;

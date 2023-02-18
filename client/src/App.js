@@ -60,12 +60,10 @@ function App() {
               <Route path="/merch/:recordId" element={<SingleRecord/>} />
               <Route path="/wishlist" element={<Wishlist />} />
             </Routes>
-          
+            <Footer/>
           </StoreProvider>
         </Router>
-       
       </ChakraProvider>
-      <Footer/>
     </ApolloProvider>
       
   );
