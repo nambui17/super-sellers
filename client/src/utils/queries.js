@@ -6,12 +6,14 @@ export const QUERY_MANY_RECORDS = gql`
     $albumTitle: String
     $artist: String
     $limit: Int
+    $years: [Int]
   ) {
     records(
       offset: $offset
       albumTitle: $albumTitle
       artist: $artist
       limit: $limit
+      years: $years
     ) {
       _id
       albumTitle

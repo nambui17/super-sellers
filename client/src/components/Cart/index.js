@@ -98,11 +98,7 @@ function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = useRef(null);
   const cancelRef = useRef();
-  const {
-    isOpen: alertIsOpen,
-    onOpen: alertOnOpen,
-    onClose: alertOnClose,
-  } = useDisclosure();
+  const { isOpen: alertIsOpen, onOpen: alertOnOpen, onClose: alertOnClose } = useDisclosure();
 
   return (
     <GridItem className="gridrecord">
@@ -126,7 +122,7 @@ function Cart() {
               {state.cart.length ? (
                 <>
                   <TableCaption placement='bottom'>Sub-total: ${calculateTotal()}</TableCaption>
-                  <Thead>
+                    <Thead>
                     <Tr>
                       <Th>Record</Th>
                       <Th>Price</Th>
@@ -139,12 +135,12 @@ function Cart() {
               )}
               <Tbody>
                 {state.cart.length ? (
-                  state.cart.map((record) => (
-                    <CartItem key={record._id} record={record} />
-                  ))
-                ) : (
-                  <Heading>No records in your cart</Heading>
-                )}
+                      state.cart.map((record) => (
+                        <CartItem key={record._id} record={record} />
+                      ))
+                  ) : (
+                    <Heading>No records in your cart</Heading>
+                  )}
               </Tbody>
             </Table>
           </ModalBody>
@@ -153,13 +149,7 @@ function Cart() {
               <Button colorScheme="blue" mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button
-                variant="solid"
-                colorScheme={'green'}
-                onClick={submitCheckout}
-              >
-                Checkout
-              </Button>
+              {Auth.loggedIn() ? (<Button onClick={submitCheckout}>Checkout</Button>): <></>}
               <Button variant="solid" colorScheme={'red'} onClick={alertOnOpen}>
                 Clear Cart
               </Button>
@@ -173,7 +163,7 @@ function Cart() {
         >
           <AlertDialogOverlay>
             <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              <AlertDialogHeader fontSize='lg' fontWeight='bold'>
                 Clear Cart?
               </AlertDialogHeader>
 
@@ -185,15 +175,11 @@ function Cart() {
                 <Button ref={cancelRef} onClick={alertOnClose}>
                   Cancel
                 </Button>
-                <Button
-                  colorScheme="red"
-                  onClick={() => {
-                    clearCart();
-                    alertOnClose();
-                    onClose();
-                  }}
-                  ml={3}
-                >
+                <Button colorScheme='red' onClick={() => {
+                  clearCart();
+                  alertOnClose();
+                  onClose();
+                }} ml={3}>
                   Delete
                 </Button>
               </AlertDialogFooter>

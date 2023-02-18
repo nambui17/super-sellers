@@ -55,7 +55,8 @@ const typeDefs = gql`
       artist: String
       albumTitle: String
       offset: Int
-      limit: Int
+      limit: Int,
+      years: [Int]
     ): [Record]
     record(_id: ID!): Record
     order(_id: ID!): Order
