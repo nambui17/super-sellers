@@ -94,7 +94,7 @@ function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = useRef(null);
   const cancelRef = useRef();
-  const { isOpen: alertIsOpen, onOpen: alertOnOpen, onClose: alertOnClose  } = useDisclosure();
+  const { isOpen: alertIsOpen, onOpen: alertOnOpen, onClose: alertOnClose } = useDisclosure();
 
   return (
     <GridItem className="gridrecord">
@@ -116,13 +116,24 @@ function Cart() {
           <ModalBody>
             <Table>
               <TableCaption>Sub-total: {calculateTotal()}</TableCaption>
-            {state.cart.length ? (
-              state.cart.map((record) => (
-                <CartItem key={record._id} record={record} />
-              ))
-            ) : (
-              <Heading>No records in your cart</Heading>
-            )}
+              {state.cart.length ? (
+                <div>
+                  {state.cart.map((record) => (
+                    <CartItem key={record._id} record={record} />
+                  ))}
+
+                  <div>
+                    {Auth.loggedIn() ? (
+                      <Button onClick={submitCheckout}>Checkout</Button>
+                    ) : (
+                      <span>(log in to check out)</span>
+                    )}
+                  </div>
+                </div>
+
+              ) : (
+                <Heading>No records in your cart</Heading>
+              )}
             </Table>
           </ModalBody>
           <ModalFooter>
@@ -130,13 +141,8 @@ function Cart() {
               <Button colorScheme="blue" mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button
-                variant="solid"
-                colorScheme={'green'}
-                onClick={submitCheckout}
-              >
-                Checkout
-              </Button>
+
+
               <Button variant="solid" colorScheme={'red'} onClick={alertOnOpen}>
                 Clear Cart
               </Button>
@@ -144,35 +150,35 @@ function Cart() {
           </ModalFooter>
         </ModalContent>
         <AlertDialog
-        isOpen={alertIsOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={alertOnClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              Clear Cart?
-            </AlertDialogHeader>
+          isOpen={alertIsOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={alertOnClose}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                Clear Cart?
+              </AlertDialogHeader>
 
-            <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
-            </AlertDialogBody>
+              <AlertDialogBody>
+                Are you sure? You can't undo this action afterwards.
+              </AlertDialogBody>
 
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={alertOnClose}>
-                Cancel
-              </Button>
-              <Button colorScheme='red' onClick={() => {
-                clearCart();
-                alertOnClose();
-                onClose();
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={alertOnClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme='red' onClick={() => {
+                  clearCart();
+                  alertOnClose();
+                  onClose();
                 }} ml={3}>
-                Delete
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+                  Delete
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       </Modal>
     </GridItem>
   );
