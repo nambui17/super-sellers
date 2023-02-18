@@ -26,7 +26,11 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogBody,
-  AlertDialogFooter
+  AlertDialogFooter,
+  Thead,
+  Th,
+  Tr,
+  Tbody,
 } from '@chakra-ui/react';
 import cartpic from './image/cart.png';
 
@@ -112,28 +116,33 @@ function Cart() {
       >
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Cart</ModalHeader>
+          <ModalHeader fontSize='4xl'>Cart</ModalHeader>
           <ModalBody>
             <Table>
-              <TableCaption>Sub-total: {calculateTotal()}</TableCaption>
               {state.cart.length ? (
-                <div>
-                  {state.cart.map((record) => (
-                    <CartItem key={record._id} record={record} />
-                  ))}
-
-                  <div>
-                    {Auth.loggedIn() ? (
-                      <Button onClick={submitCheckout}>Checkout</Button>
-                    ) : (
-                      <span>(log in to check out)</span>
-                    )}
-                  </div>
-                </div>
-
+                <>
+                  <TableCaption placement='bottom'>Sub-total: ${calculateTotal()}</TableCaption>
+                    <Thead>
+                    <Tr>
+                      <Th>Record</Th>
+                      <Th>Price</Th>
+                      <Th isNumeric>Quantity:</Th>
+                      <Th>Delete</Th>
+                    </Tr>
+                  </Thead>
+                </>
               ) : (
-                <Heading>No records in your cart</Heading>
+                <></>
               )}
+              <Tbody>
+                {state.cart.length ? (
+                      state.cart.map((record) => (
+                        <CartItem key={record._id} record={record} />
+                      ))
+                  ) : (
+                    <Heading>No records in your cart</Heading>
+                  )}
+              </Tbody>
             </Table>
           </ModalBody>
           <ModalFooter>
@@ -141,8 +150,7 @@ function Cart() {
               <Button colorScheme="blue" mr={3} onClick={onClose}>
                 Close
               </Button>
-
-
+              {Auth.loggedIn() ? (<Button onClick={submitCheckout}>Checkout</Button>): <></>}
               <Button variant="solid" colorScheme={'red'} onClick={alertOnOpen}>
                 Clear Cart
               </Button>

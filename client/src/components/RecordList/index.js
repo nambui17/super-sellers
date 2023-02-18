@@ -12,11 +12,13 @@ import Record from '../Record';
 import { useMutation, useQuery } from '@apollo/client';
 import { QUERY_MANY_RECORDS } from '../../utils/queries';
 
-export default function RecordList({ offset }) {
+export default function RecordList({ offset, artist, albumTitle }) {
   const { loading, data } = useQuery(QUERY_MANY_RECORDS, {
     variables: { 
       offset: (offset-1)*8,
-      limit: 8
+      limit: 8,
+      artist: artist,
+      albumTitle: albumTitle
      },
   });
   const records = data?.records || [];
