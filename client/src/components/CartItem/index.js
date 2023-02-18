@@ -1,20 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
 import {
-  Box,
-  Grid,
-  GridItem,
   Image,
-  SimpleGrid,
   Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
+  Button,
+  Tr,
+  Td,
 } from '@chakra-ui/react';
+import {DeleteIcon} from '@chakra-ui/icons'
 import { idbPromise } from '../../utils/helpers';
+import './style.css';
 
-export default function CartItem({ record, price }) {
+export default function CartItem({ record }) {
   const [state, dispatch] = useStoreContext();
   const removeFromCart = (record) => {
     dispatch({
@@ -23,16 +21,17 @@ export default function CartItem({ record, price }) {
     });
     idbPromise('cart', 'delete', { ...record });
   };
+  const [val, setVal] = useState(record.purchaseQuantity);
 
-  const onChange = (e) => {
+  const onBlur = (e) => {
     const value = e.target.value;
-    if (value === '0') {
+    if (value === '0' || value === '') {
       dispatch({
         type: REMOVE_FROM_CART,
         _id: record._id,
       });
       idbPromise('cart', 'delete', { ...record });
-    } else {
+    } else if (value !== '') {
       dispatch({
         type: UPDATE_CART_QUANTITY,
         _id: record._id,
@@ -44,21 +43,28 @@ export default function CartItem({ record, price }) {
       });
     }
   };
-  console.log(record.purchaseQuantity);
+
+  const onChange = (e) => {
+    const value = e.target.value;
+    setVal(value);
+  }
+
   return (
-    <>
-      <GridItem colStart={1} colEnd={7}>
-        <Image src={record.image}></Image>
-      </GridItem>
-      <GridItem colStart={7} colEnd={9}>
-        <p>Cost: ${record.price}</p>
-      </GridItem>
-      <GridItem colStart={1} colEnd={13}>
-        <InputGroup size="md">
-          <Input value={record.purchaseQuantity} />
-          <InputRightAddon children="Quantity:" />
-        </InputGroup>
-      </GridItem>
-    </>
+    <Tr>
+      <Td>
+        <Image src={record.image}/>
+        <h3>{record.title}</h3>
+      </Td>
+      <Td>
+        <h3>Price per: ${record.price}</h3>
+        <h3>Price: ${parseFloat(record.price)*parseInt(record.purchaseQuantity)}</h3>
+      </Td>
+      <Td className='inputColumn'>
+          <Input value={val} onChange={onChange} onBlur={onBlur} className='qIn' type={'number'}/>
+      </Td>
+      <Td>
+        <Button onClick={() => {removeFromCart(record)}} colorScheme='red'><DeleteIcon/></Button>
+      </Td>
+    </Tr>
   );
 }

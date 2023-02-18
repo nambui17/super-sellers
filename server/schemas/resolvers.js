@@ -1,18 +1,10 @@
-const { AuthenticationError } = require("apollo-server-express");
+const { AuthenticationError } = require('apollo-server-express');
 const { User, Record, Order } = require('../models');
-const { signToken } = require("../utils/auth");
+const { signToken } = require('../utils/auth');
 require('dotenv').config();
-const stripe = require('stripe')('sk_test_51MbWZzDNwv6WJ9kGKJC98HVjapyLFNScghs3xlxDw75OLuwsboD4LqXUZiqg1Sv1MlkGL54ZkgNtKal7I0i4zDPS00kGLfbTFa');
-
-var generateRandomString = function (length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
+const stripe = require('stripe')(
+  'sk_test_51MbWZzDNwv6WJ9kGKJC98HVjapyLFNScghs3xlxDw75OLuwsboD4LqXUZiqg1Sv1MlkGL54ZkgNtKal7I0i4zDPS00kGLfbTFa'
+);
 
 const resolvers = {
   Query: {
@@ -26,9 +18,36 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    records: async (parent, {artist, albumTitle, offset, limit}) => {
-      const recordData = await Record.find().skip(offset).limit(limit);
-      // Record.find().skip(offset).limit(12).where('artist').equals(artist).where('albumTitle').equals(albumTitle);
+    records: async (
+      parent,
+      { artist = '', albumTitle = '', offset, limit, years=[1950, 2023] }
+    ) => {
+      let recordData;
+      if (artist !== '') {
+        recordData = await Record.find()
+        .skip(offset)
+        .limit(limit)
+        .where('artist')
+        .equals(artist)
+      } else if (albumTitle !== '') {
+        recordData = await Record.find()
+        .skip(offset)
+        .limit(limit)
+        .where('albumTitle')
+        .equals(albumTitle)
+      } else if (years !== []) {
+        recordData = await Record.find()
+          .skip(offset)
+          .limit(limit)
+          .where('dateListed').equals({
+            $gte: years[0],
+            $lte: years[1]
+          })
+      } else {
+        recordData = await Record.find()
+        .skip(offset)
+        .limit(limit)
+      }
       return recordData;
     },
     record: async (parent, { _id }) => {
@@ -38,7 +57,7 @@ const resolvers = {
     order: async (parent, { _id }, context) => {
       if (context.user) {
         const user = await User.findById(context.user._id).populate({
-          path: 'orders.records'
+          path: 'orders.records',
         });
 
         return user.orders.id(_id);
@@ -48,22 +67,17 @@ const resolvers = {
     },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
-      console.log("line 39 url referer header", url);
+      console.log('line 39 url referer header', url);
       const order = new Order({ records: args.records });
       const line_items = [];
       const { records } = await order.populate('records');
 
-
-
       for (let i = 0; i < records.length; i++) {
-
-
         const record = await stripe.products.create({
           name: records[i].albumTitle,
           description: records[i].artist,
-          images: [`${url}/images/${records[i].imageUrl}`]
+          images: [`${url}/images/${records[i].imageUrl}`],
         });
-
 
         const price = await stripe.prices.create({
           product: record.id,
@@ -73,7 +87,7 @@ const resolvers = {
 
         line_items.push({
           price: price.id,
-          quantity: 1
+          quantity: 1,
         });
       }
       const session = await stripe.checkout.sessions.create({
@@ -81,11 +95,11 @@ const resolvers = {
         line_items,
         mode: 'payment',
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`
+        cancel_url: `${url}/`,
       });
 
       return { session: session.id };
-    }
+    },
   },
 
   Mutation: {
@@ -116,7 +130,11 @@ const resolvers = {
     updateRecord: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
 
-      return await Record.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+      return await Record.findByIdAndUpdate(
+        _id,
+        { $inc: { quantity: decrement } },
+        { new: true }
+      );
     },
 
     addRecord: async (parent, args) => {
@@ -127,9 +145,9 @@ const resolvers = {
     addWishlist: async (parent, args, context) => {
       console.log(context);
       if (context.user) {
-        const updateUser =  await User.findByIdAndUpdate(
-          { _id: context.user.id }, 
-          {$push: { savedWishlist: args._id } },
+        const updateUser = await User.findByIdAndUpdate(
+          { _id: context.user.id },
+          { $push: { savedWishlist: args._id } },
           { new: true }
         );
         return updateUser;
@@ -180,4 +198,3 @@ const resolvers = {
 };
 
 module.exports = resolvers;
-

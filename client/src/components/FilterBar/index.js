@@ -24,14 +24,13 @@ import {
 export default function FilterBar() {
   const genres = ['Rock', 'Pop Music', 'Indie rock'];
   const [years, setYears] = useState([1950, 2023]);
-  const [genre, setGenre] = useState(null);
   const [artist, setArtist] = useState(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   return (
     <>
-      <Button ref={btnRef} colorScheme="green" onClick={onOpen} variant='ghost'>
+      <Button ref={btnRef} colorScheme="green" onClick={onOpen} variant="ghost">
         Filter
       </Button>
 
