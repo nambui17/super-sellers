@@ -51,13 +51,12 @@ function Navbar() {
       link: "/signup",
     },
   ];
-
   return (
     <Box className="navContainer">
       <Center className="headerBox">
         <Heading className="heading">New Age Records</Heading>
       </Center>
-      <Grid templateColumns="repeat(15, 1fr)" className="navBox">
+      <Grid display={{ lg: 'flex'}}  templateColumns="repeat(15, 1fr)" className="navBox" >
         {navItems.map((item) => (
           <GridItem
             colStart={item.colStart}
