@@ -2,18 +2,13 @@ import React, {useState} from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import { REMOVE_FROM_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
 import {
-  Box,
-  Grid,
-  GridItem,
   Image,
-  SimpleGrid,
   Input,
-  InputGroup,
-  InputLeftAddon,
-  InputRightAddon,
+  Button,
   Tr,
   Td,
 } from '@chakra-ui/react';
+import {DeleteIcon} from '@chakra-ui/icons'
 import { idbPromise } from '../../utils/helpers';
 import './style.css';
 
@@ -66,6 +61,9 @@ export default function CartItem({ record }) {
       </Td>
       <Td className='inputColumn'>
           <Input value={val} onChange={onChange} onBlur={onBlur} className='qIn' type={'number'}/>
+      </Td>
+      <Td>
+        <Button onClick={() => {removeFromCart(record)}} colorScheme='red'><DeleteIcon/></Button>
       </Td>
     </Tr>
   );

@@ -127,6 +127,7 @@ function Cart() {
                       <Th>Record</Th>
                       <Th>Price</Th>
                       <Th isNumeric>Quantity:</Th>
+                      <Th>Delete</Th>
                     </Tr>
                   </Thead>
                 </>
