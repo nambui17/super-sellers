@@ -21,7 +21,7 @@ export default function RecordList({ offset }) {
   });
   const records = data?.records || [];
   return (
-    <GridItem rowSpan={2.3} colSpan={8}>
+    <GridItem rowSpan={2.3} colSpan={9}>
       <SimpleGrid columns={{ sm: 1, md: 2, lg: 4 }}>
         {loading ? (
           <Spinner />

@@ -52,7 +52,7 @@ function Record({id, image, title, artist, comments, quantity, price}) {
         description: 'Record Quantity Increased in Cart',
         status: 'success',
         variant: 'subtle',
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       })
     } else {
@@ -68,7 +68,7 @@ function Record({id, image, title, artist, comments, quantity, price}) {
         title: 'Record Added',
         description: 'Record Added to Cart!',
         status: 'success',
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       })
     }
