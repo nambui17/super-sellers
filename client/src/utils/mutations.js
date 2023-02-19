@@ -57,16 +57,30 @@ export const ADD_ORDER = gql`
 `;
 
 export const ADD_WISHLIST = gql`
-  mutation addWishlist($records: [ID]!) {
-    addWishlist(records: $records) {
-      _id
-      records {
+  mutation AddWishlist($record: RecordInput!) {
+    addWishlist(record: $record) {
+      savedWishlist {
         _id
-        albumTitle
         artist
+        albumTitle
         imageUrl
         price
         quantity
+      }
+    }
+  }
+`;
+
+export const REMOVE_WISHLIST = gql`
+  mutation RemoveWishlist($id: ID!) {
+    removeWishlist(_id: $id) {
+      savedWishlist {
+        _id
+        artist
+        albumTitle
+        price
+        quantity
+        imageUrl
       }
     }
   }

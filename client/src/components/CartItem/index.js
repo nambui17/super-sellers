@@ -7,6 +7,8 @@ import {
   Button,
   Tr,
   Td,
+  InputLeftAddon,
+  InputGroup,
 } from '@chakra-ui/react';
 import {DeleteIcon} from '@chakra-ui/icons'
 import { idbPromise } from '../../utils/helpers';
@@ -60,7 +62,10 @@ export default function CartItem({ record }) {
         <h3>Price: ${parseFloat(record.price)*parseInt(record.purchaseQuantity)}</h3>
       </Td>
       <Td className='inputColumn'>
+        <InputGroup>
+          <InputLeftAddon children='Quantity'/>
           <Input value={val} onChange={onChange} onBlur={onBlur} className='qIn' type={'number'}/>
+        </InputGroup>
       </Td>
       <Td>
         <Button onClick={() => {removeFromCart(record)}} colorScheme='red'><DeleteIcon/></Button>

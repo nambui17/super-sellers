@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   Card,
   CardBody,
@@ -6,11 +6,9 @@ import {
   Divider,
   Button,
   ButtonGroup,
-  Text,
   Stack,
   Heading,
   CardFooter,
-  GridItem,
   List,
   ListItem,
   useToast
@@ -19,11 +17,15 @@ import { Link } from 'react-router-dom';
 import { ADD_TO_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
 import { idbPromise } from '../../utils/helpers';
 import { useStoreContext } from '../../utils/GlobalState';
+import { useMutation } from '@apollo/client';
+import { ADD_WISHLIST } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 import './style.css';
 
 function Record({id, image, title, artist, comments, quantity, price}) {
   const [state, dispatch] = useStoreContext();
+  const [wishlistAdd, {error}] = useMutation(ADD_WISHLIST);
   const record = {
     _id: id,
     image,
@@ -73,6 +75,39 @@ function Record({id, image, title, artist, comments, quantity, price}) {
       })
     }
   }
+  async function handleWishlistAdd() {
+    if (Auth.loggedIn()) {
+      const { data } = await wishlistAdd({
+        variables: {
+          "record": {
+            "albumTitle": title,
+            "_id": id,
+            "artist": artist,
+            "quantity": parseInt(quantity),
+            "imageUrl": image,
+            "price": parseFloat(price),
+          }
+      }
+      }
+      );
+      toast({
+        title: 'I wish I wish',
+        description: 'Record added to your wishlist!',
+        status: 'info',
+        duration: 2000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Can't add to wishlist!",
+        description: "You're not logged in!",
+        status: 'warning',
+        duration: 2000,
+        isClosable: true,
+      })
+    }
+  }
+
   return (
       <Card maxW="sm" className="record">
         <CardBody>
@@ -107,6 +142,9 @@ function Record({id, image, title, artist, comments, quantity, price}) {
           <ButtonGroup spacing="2">
             <Button variant="solid" colorScheme="green" onClick={addToCart}>
               Add to cart
+            </Button>
+            <Button variant='outline' colorScheme='orange' onClick={handleWishlistAdd}>
+              Add to Wishlist
             </Button>
           </ButtonGroup>
         </CardFooter>

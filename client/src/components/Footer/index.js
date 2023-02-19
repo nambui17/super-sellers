@@ -5,8 +5,8 @@ import "./footer.css";
 
 export default function Footer() {
   return (
-    <div className='spotflex'>
-      <div>
+    <Box className='spotflex'>
+      <Box>
         <Box boxSize="50px">
           <Image
             className="spotify"
@@ -14,7 +14,7 @@ export default function Footer() {
             alt="Spotify Logo"
           />
         </Box>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
