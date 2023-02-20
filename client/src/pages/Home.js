@@ -20,20 +20,20 @@ const theme = extendTheme({ breakpoints })
 export default function Home() {
   const AnimatedImage = animated(Image);
   const prop = useSpring({
-    from: { x: 300, opacity: 0 },
-    to: { x: 0, opacity: 1 },
+    from: { x: 300, opacity: 0, rotate: 0 },
+    to: { x: 0, opacity: 1, rotate: 360 },
     config: {
       mass: 5,
-      tension: 120,
+      tension: 50,
     },
   });
   return (
-    <Box>
+    <Box height={'100vh'}>
   
-      <Grid display={{md: 'flex'}}  gridTemplateColumns="repeat(5,1fr)" autoRows>
+      <Grid display={{md: 'flex'}}  gridTemplateColumns="repeat(5,1fr)" autoRows marginLeft={'50px'}>
         
           <GridItem colSpan={2}>
-            <Container>
+            <Container marginRight={'50px'}>
               <Heading className="slogan">
                 Bring the Music to Life with Every Spin!
               </Heading>
@@ -54,7 +54,7 @@ export default function Home() {
           </GridItem>
           <GridItem colSpan={2}>
             <AnimatedImage
-             className="media"
+              className="media"
               src="/assets/images/pexels-record.jpg"
               alt="Spinning record"
               borderRadius={'lg'}

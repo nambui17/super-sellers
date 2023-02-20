@@ -15,13 +15,22 @@ const typeDefs = gql`
     spotifyUri: String
   }
 
+  type WishlistItem {
+    _id: ID
+    artist: String
+    albumTitle: String
+    price: Float
+    quantity: Int
+    imageUrl: String
+  }
+
   type User {
     _id: ID
     firstName: String
     lastName: String
     email: String
     password: String
-    savedWishlist: [Record]
+    savedWishlist: [WishlistItem]
   }
 
   type Order {
@@ -35,11 +44,6 @@ const typeDefs = gql`
     records: [Record]
   }
 
-  type Wishlist {
-    _id: ID
-    records: [Record]
-  }
-
   type Auth {
     token: ID
     user: User
@@ -47,6 +51,15 @@ const typeDefs = gql`
 
   type Checkout {
     session: ID
+  }
+  
+  input RecordInput {
+    _id: ID
+    artist: String
+    albumTitle: String
+    imageUrl: String
+    price: Float
+    quantity: Int
   }
 
   type Query {
@@ -91,7 +104,7 @@ const typeDefs = gql`
       status: String
     ): Record
 
-    addWishlist(_id: [ID]!): User
+    addWishlist(record: RecordInput!): User
     removeWishlist(_id: ID!): User
   }
 `;

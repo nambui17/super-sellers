@@ -49,7 +49,7 @@ function Merchandise() {
   };
   return (
       <Grid
-        h="100vw"
+        h="150vh"
         templateRows="repeat(4,1fr)"
         templateColumns="repeat(10,1fr)"
         gap={3}

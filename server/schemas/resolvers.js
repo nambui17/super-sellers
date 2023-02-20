@@ -143,11 +143,12 @@ const resolvers = {
     },
 
     addWishlist: async (parent, args, context) => {
-      console.log(context);
       if (context.user) {
         const updateUser = await User.findByIdAndUpdate(
-          { _id: context.user.id },
-          { $push: { savedWishlist: args._id } },
+          { _id: context.user._id,
+            'savedWishlist': {$ne: args.record._id}
+           },
+          { $addToSet: { savedWishlist: {...args.record} } },
           { new: true }
         );
         return updateUser;
@@ -171,7 +172,6 @@ const resolvers = {
     },
 
     addOrder: async (parent, { records }, context) => {
-      console.log(context);
       if (context.user) {
         const order = new Order({ records });
 

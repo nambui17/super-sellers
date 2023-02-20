@@ -20,6 +20,10 @@
     align-items: center;
 }
 
+.navItem:hover {
+    cursor: pointer;
+}
+
 .headerBox {
     margin-bottom: 20px;
     border-radius: 10px;

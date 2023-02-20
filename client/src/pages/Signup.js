@@ -38,6 +38,7 @@ export default function SignupCard() {
     });
     const token = mutationResponse.data.addUser.token;
     Auth.login(token);
+    window.location.assign('/');
   };
 
   const handleChange = (event) => {
