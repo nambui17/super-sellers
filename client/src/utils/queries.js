@@ -51,12 +51,20 @@ export const QUERY_SINGLE_RECORD = gql`
 export const QUERY_USER = gql`
   query Query {
     user {
+    _id
+    firstName
+    lastName
+    email
+    savedWishlist {
       _id
-      email
-      firstName
-      lastName
+      artist
+      albumTitle
+      imageUrl
+      price
+      quantity
     }
   }
+}
 `;
 
 export const QUERY_CHECKOUT = gql`

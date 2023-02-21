@@ -11,8 +11,6 @@ import {
   RangeSliderThumb,
   Checkbox,
   Drawer,
-  DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerContent,
   DrawerCloseButton,
@@ -65,11 +63,12 @@ export default function FilterBar() {
               <Heading>Year</Heading>
               <RangeSlider
                 aria-label={['min', 'max']}
-                defaultValue={[1950, 2023]}
+                defaultValue={[1975, 1990]}
                 min={1950}
                 max={2023}
                 step={1}
                 onChangeEnd={(val) => setYears(val)}
+                colorScheme='green'
               >
                 <RangeSliderTrack>
                   <RangeSliderFilledTrack />
