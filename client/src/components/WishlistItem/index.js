@@ -24,9 +24,9 @@ export default function WishlistItem({_id, imageUrl, artist, albumTitle, price, 
         })
     }
   return (
-    <SimpleGrid columns={3} textAlign='center' alignItems='center'>
+    <SimpleGrid columns={{sm:1, md: 3}} textAlign='center' alignItems='center' flexWrap>
       <Image src={imageUrl} />
-      <Flex padding={'20px'} marginRight={'20px'} flexDirection='column'>
+      <Flex padding={'20px'} marginRight={'20px'} flexDirection='column' flexWrap>
         <Heading>{albumTitle}</Heading>
         <Text>{artist}</Text>
         <Text>${price}</Text>
