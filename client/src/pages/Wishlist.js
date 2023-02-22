@@ -2,18 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {
   SimpleGrid,
   Box,
-  Divider,
   List,
-  Center,
   Heading,
-  AccordionItem,
-  GridItem,
-  Spacer,
   ListItem,
   Flex,
   Spinner
 } from '@chakra-ui/react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import '../App.css';
 import { QUERY_USER } from '../utils/queries';
