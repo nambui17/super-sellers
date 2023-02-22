@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, SimpleGrid, Image, Heading, Text, Button, useToast, Flex } from '@chakra-ui/react';
+import { SimpleGrid, Image, Heading, Text, Button, useToast, Flex } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useMutation } from '@apollo/client';
 import { REMOVE_WISHLIST } from '../../utils/mutations';

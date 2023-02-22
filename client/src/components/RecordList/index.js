@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   GridItem,
-  Grid,
   SimpleGrid,
   Spinner,
-  Button,
-  ButtonGroup,
 } from '@chakra-ui/react';
-import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import Record from '../Record';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { QUERY_MANY_RECORDS } from '../../utils/queries';
 
 export default function RecordList({ offset, artist, albumTitle }) {
