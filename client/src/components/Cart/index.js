@@ -31,6 +31,8 @@ import {
   Th,
   Tr,
   Tbody,
+  Alert,
+  AlertIcon,
 } from '@chakra-ui/react';
 import cartpic from './image/cart.png';
 
@@ -144,6 +146,12 @@ function Cart() {
                   )}
               </Tbody>
             </Table>
+            {!Auth.loggedIn() ? 
+            <Alert status='warning'>
+              <AlertIcon/>
+              Please log in to check out!
+            </Alert>  
+          : <></>}
           </ModalBody>
           <ModalFooter>
             <ButtonGroup>

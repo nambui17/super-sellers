@@ -119,7 +119,7 @@ function Record({ id, image, title, artist, comments, quantity, price }) {
           </Heading>
           <List>
             <ListItem>Artist: {artist}</ListItem>
-            <ListItem>Price: ${price}</ListItem>
+            <ListItem>Price: ${parseFloat(price).toFixed(2)}</ListItem>
             <ListItem>Condition: {comments}</ListItem>
             <ListItem>Quantity: {quantity}</ListItem>
           </List>
