@@ -29,7 +29,7 @@ export default function WishlistItem({_id, imageUrl, artist, albumTitle, price, 
       <Flex padding={'20px'} marginRight={'20px'} flexDirection='column' flexWrap>
         <Heading>{albumTitle}</Heading>
         <Text>{artist}</Text>
-        <Text>${price}</Text>
+        <Text>${parseFloat(price).toFixed(2)}</Text>
       </Flex>
       <Button colorScheme={'red'} onClick={handleDelete}><DeleteIcon/></Button>
     </SimpleGrid>
