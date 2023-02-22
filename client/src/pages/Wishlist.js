@@ -25,8 +25,8 @@ function Wishlist() {
     }
   }, [user.savedWishlist, data, refetch]);
   return (
-    <Flex height={'100vh'} alignItems="start">
-      <SimpleGrid columns={2}>
+    <Flex height={'100vh'} alignItems="start" flexWrap>
+      <SimpleGrid columns={1} flexWrap>
         <Box>
           {!loading ? <Heading>{user.firstName}'s Wishlist</Heading> : <Spinner/>}
         </Box>
