@@ -59,6 +59,7 @@ export default function Home() {
               alt="Spinning record"
               borderRadius={'lg'}
               style={prop}
+              fit='contain'
             />
           </GridItem>
      
